@@ -26,7 +26,7 @@ public class TripService {
                 }
             }
             if (f) {
-                tl = TripDAO.findTripsByUser(user);
+                tl = findTripsByUser(user);
             }
             return tl;
         } else {
@@ -34,6 +34,10 @@ public class TripService {
         }
 
      
+    }
+
+    protected List<Trip> findTripsByUser(User user) {
+        return TripDAO.findTripsByUser(user);
     }
 
     protected User getLoggedUser() {

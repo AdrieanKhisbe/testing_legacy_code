@@ -17,4 +17,8 @@ public class User {
     public List<Trip> getTrips() {
         return trips;
     }
+
+    public void addFriend(User futureFriend) {
+        friends.add(futureFriend);
+    }
 }
