@@ -1,4 +1,4 @@
-package org.craftedsw.hardependancies.trip;
+package org.craftedsw.harddependancies.trip;
 
 import org.craftedsw.harddependencies.exception.UserNotLoggedInException;
 import org.craftedsw.harddependencies.trip.Trip;

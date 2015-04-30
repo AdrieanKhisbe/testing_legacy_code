@@ -1,4 +1,4 @@
-package org.craftedsw.hardependancies.user;
+package org.craftedsw.harddependancies.user;
 
 import org.assertj.core.api.Assertions;
 import org.craftedsw.harddependencies.user.User;
