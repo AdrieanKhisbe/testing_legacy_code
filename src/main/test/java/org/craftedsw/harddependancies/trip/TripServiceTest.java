@@ -1,11 +1,11 @@
 package org.craftedsw.harddependancies.trip;
 
 import org.craftedsw.harddependencies.exception.UserNotLoggedInException;
-import org.craftedsw.harddependencies.trip.Trip;
-import org.craftedsw.harddependencies.trip.TripService;
+import org.craftedsw.harddependencies.trip.*;
 import org.craftedsw.harddependencies.user.User;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,13 @@ public class TripServiceTest {
     private User loggedUser;
     private User userArg;
     private TripService tripService;
+    private TripDAO tripDao;
     private List<Trip> daoTripResult;
 
     @Before
     public void setUp() throws Exception {
-        tripService = new TestableTripService();
+        tripDao = Mockito.mock(TripDAO.class);
+        tripService = new TestableTripService(tripDao);
     }
 
     @Test(expected = UserNotLoggedInException.class)
@@ -61,6 +63,8 @@ public class TripServiceTest {
         daoTripResult = new ArrayList<Trip>();
         Trip trip = new Trip();
         daoTripResult.add(trip);
+        Mockito.stub(tripDao.findTrips(userArg)).toReturn(daoTripResult);
+
 
         // then
         List<Trip> trips = tripService.getTripsByUser(userArg);
@@ -88,16 +92,14 @@ public class TripServiceTest {
 
 
     private class TestableTripService extends TripService {
+        public TestableTripService(TripDAO dao) {
+            super(dao);
+        }
+
         @Override
         protected User getLoggedUser() {
             return loggedUser;
         }
-
-        @Override
-        protected List<Trip> findTripsByUser(User user) {
-            return daoTripResult;
-        }
-
     }
 
 }
