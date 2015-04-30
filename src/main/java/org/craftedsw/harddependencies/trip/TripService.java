@@ -5,25 +5,17 @@ import org.craftedsw.harddependencies.user.User;
 import org.craftedsw.harddependencies.user.UserSession;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TripService {
 
     public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
-
-        List<Trip> trips = new ArrayList<Trip>();
         User loggedUser = getLoggedUser();
-        
-        if (loggedUser == null) {
-            throw new UserNotLoggedInException();
-        }
 
-        boolean areFriends =  user.getFriends().contains(loggedUser);
-        if (areFriends) {
-            trips = findTripsByUser(user);
-        }
-        return trips;
-        
+        if (loggedUser == null) throw new UserNotLoggedInException();
+
+        return user.getFriends().contains(loggedUser) ? findTripsByUser(user) : Collections.<Trip>emptyList();
     }
 
     protected List<Trip> findTripsByUser(User user) {
