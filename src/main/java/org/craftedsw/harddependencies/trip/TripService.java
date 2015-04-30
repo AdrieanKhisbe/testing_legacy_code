@@ -12,17 +12,15 @@ public class TripService {
     public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
 
         List<Trip> tl = new ArrayList<Trip>();
-        User u = getLoggedUser();
+        User loggedUser = getLoggedUser();
         boolean f = false;
-        if (u != null) {
-            for (int i = 1; i <= user.getFriends().size(); i++) {
-                User u2 = user.getFriends().get(i - 1);
-                if (u2 != null) {
-                    if (u2.equals(u) == true) {
+        if (loggedUser != null) {
+            for (User friend : user.getFriends()) {
+                if (friend != null) {
+                    if (friend.equals(loggedUser)) {
                         f = true;
                         break;
                     }
-                    continue;
                 }
             }
             if (f) {
@@ -33,7 +31,7 @@ public class TripService {
             throw new UserNotLoggedInException();
         }
 
-     
+
     }
 
     protected List<Trip> findTripsByUser(User user) {
