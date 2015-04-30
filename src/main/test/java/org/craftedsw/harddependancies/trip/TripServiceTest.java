@@ -39,7 +39,7 @@ public class TripServiceTest {
         userArg = null;
 
         // then
-        tripService.getTripsByUser(loggedUser, userArg);
+        tripService.getFriendTrips(loggedUser, userArg);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class TripServiceTest {
         userArg = CHUCK;
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
+        List<Trip> trips = tripService.getFriendTrips(loggedUser, userArg);
         assertThat(trips).isEmpty();
     }
 
@@ -67,7 +67,7 @@ public class TripServiceTest {
 
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
+        List<Trip> trips = tripService.getFriendTrips(loggedUser, userArg);
         assertThat(trips).isNotEmpty();
         assertThat(trips).contains(trip);
     }
@@ -86,7 +86,7 @@ public class TripServiceTest {
         daoTripResult.add(trip);
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
+        List<Trip> trips = tripService.getFriendTrips(loggedUser, userArg);
         assertThat(trips).isEmpty();
     }
 

@@ -16,10 +16,11 @@ public class TripService {
         this.dao = dao;
     }
 
-    public List<Trip> getTripsByUser(User loggedUser, User user) throws UserNotLoggedInException {
+    public List<Trip> getFriendTrips(User loggedUser, User friend) throws UserNotLoggedInException {
         if (loggedUser == null) throw new UserNotLoggedInException();
 
-        return user.getFriends().contains(loggedUser) ? dao.findTrips(user) : Collections.<Trip>emptyList();
+        boolean areFriends = friend.getFriends().contains(loggedUser);
+        return areFriends ? dao.findTrips(friend) : Collections.<Trip>emptyList();
     }
 
 }
