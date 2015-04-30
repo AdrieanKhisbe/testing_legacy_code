@@ -29,7 +29,7 @@ public class TripServiceTest {
     @Before
     public void setUp() throws Exception {
         tripDao = Mockito.mock(TripDAO.class);
-        tripService = new TestableTripService(tripDao);
+        tripService = new TripService(tripDao);
     }
 
     @Test(expected = UserNotLoggedInException.class)
@@ -39,7 +39,7 @@ public class TripServiceTest {
         userArg = null;
 
         // then
-        tripService.getTripsByUser(userArg);
+        tripService.getTripsByUser(loggedUser, userArg);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class TripServiceTest {
         userArg = CHUCK;
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(userArg);
+        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
         assertThat(trips).isEmpty();
     }
 
@@ -67,7 +67,7 @@ public class TripServiceTest {
 
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(userArg);
+        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
         assertThat(trips).isNotEmpty();
         assertThat(trips).contains(trip);
     }
@@ -86,20 +86,8 @@ public class TripServiceTest {
         daoTripResult.add(trip);
 
         // then
-        List<Trip> trips = tripService.getTripsByUser(userArg);
+        List<Trip> trips = tripService.getTripsByUser(loggedUser, userArg);
         assertThat(trips).isEmpty();
-    }
-
-
-    private class TestableTripService extends TripService {
-        public TestableTripService(TripDAO dao) {
-            super(dao);
-        }
-
-        @Override
-        protected User getLoggedUser() {
-            return loggedUser;
-        }
     }
 
 }
