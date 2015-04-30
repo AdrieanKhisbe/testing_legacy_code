@@ -10,8 +10,9 @@ import java.util.List;
 public class TripService {
 
     public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
+
         List<Trip> tl = new ArrayList<Trip>();
-        User u = UserSession.getInstance().getLoggedUser();
+        User u = getLoggedUser();
         boolean f = false;
         if (u != null) {
             for (int i = 1; i <= user.getFriends().size(); i++) {
@@ -31,5 +32,11 @@ public class TripService {
         } else {
             throw new UserNotLoggedInException();
         }
+
+     
+    }
+
+    protected User getLoggedUser() {
+        return UserSession.getInstance().getLoggedUser();
     }
 }
